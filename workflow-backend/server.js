@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -16,14 +17,15 @@ app.use(express.json());
 app.use("/api/workflow", require("./routes/workflowRoutes"));
 app.use("/api/status", require("./routes/statusRoutes"));
 
-// Serve React frontend from workflow-frontend
+// Serve React frontend
 const frontendBuildPath = path.join(__dirname, "../workflow-frontend/client");
 app.use(express.static(frontendBuildPath));
 
-// Catch-all route for React (must be **after** API routes)
-app.get("/*", (req, res) => {
+// Catch-all for React (Express 5 compatible)
+app.get(/^\/.*$/, (req, res) => {
   res.sendFile(path.join(frontendBuildPath, "index.html"));
 });
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
