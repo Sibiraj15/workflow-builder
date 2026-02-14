@@ -20,6 +20,8 @@ app.use("/api/status", require("./routes/statusRoutes"));
 // Serve React frontend
 const frontendBuildPath = path.join(__dirname, "../workflow-frontend/client");
 app.use(express.static(frontendBuildPath));
+console.log("Frontend path:", frontendBuildPath);
+
 
 // Catch-all for React (Express 5 compatible)
 app.get(/^\/.*$/, (req, res) => {
