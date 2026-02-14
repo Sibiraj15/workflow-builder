@@ -17,10 +17,11 @@ app.use("/api/workflow", require("./routes/workflowRoutes"));
 app.use("/api/status", require("./routes/statusRoutes"));
 
 // Serve React frontend from workflow-frontend
-const frontendBuildPath = path.join(__dirname, "../workflow-frontend/build");
+const frontendBuildPath = path.join(__dirname, "../workflow-frontend/client");
 app.use(express.static(frontendBuildPath));
 
-app.get("*", (req, res) => {
+// Catch-all route for React (must be **after** API routes)
+app.get("/*", (req, res) => {
   res.sendFile(path.join(frontendBuildPath, "index.html"));
 });
 
